@@ -1,13 +1,14 @@
 import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
 import App1 from "./App1";
+import App1a from "./App1a";
 
 function App() {
 	return (
 		<>
 			<Routes>
-				<Route path="/" element={<App1 />} />
-				<Route path="/index.html" element={<App1 />} />
+				<Route path="/" element={<App1a />} />
+				<Route path="/index.html" element={<App1a />} />
 				{/* ↑デフォルトアプリ */}
 				<Route path="/1" element={<App1 />} />
 			</Routes>
