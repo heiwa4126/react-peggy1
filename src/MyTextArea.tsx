@@ -1,26 +1,37 @@
-import React from "react";
+import type React from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 
 export class MyTextArea {
-	private textAreaRef: React.RefObject<HTMLTextAreaElement>;
+	private text: string | undefined;
+	private setText: Dispatch<SetStateAction<string | undefined>>;
 
 	constructor() {
-		this.textAreaRef = React.createRef(); // refの初期化
+		this.text = "";
+		this.setText = () => {};
 	}
+
 	// テキストエリアの値を取得するメソッド
-	getText = () => {
-		return this.textAreaRef.current ? this.textAreaRef.current.value : "";
+	get = () => {
+		return this.text ? this.text : "";
 	};
 
 	// テキストエリアの値を設定するメソッド
-	setText = (newValue: string) => {
-		if (this.textAreaRef.current) {
-			this.textAreaRef.current.value = newValue;
-		}
+	set = (newVal: string) => {
+		this.setText(newVal);
 	};
 
 	draw = ({
 		...props
-	}: Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "ref">) => {
-		return <textarea ref={this.textAreaRef} value={this.s} {...props} />;
+	}: Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "value" | "onChange">) => {
+		[this.text, this.setText] = useState<string>();
+		return (
+			<textarea
+				value={this.text}
+				onChange={(e) => {
+					this.setText(e.target.value);
+				}}
+				{...props}
+			/>
+		);
 	};
 }
