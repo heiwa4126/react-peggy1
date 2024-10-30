@@ -28,7 +28,9 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 		}
 	};
 
-	useCtrlEnter(updateResult, [text]);
+	useCtrlEnter(() => {
+		updateResult(textareaRef.current?.value);
+	}, [text]);
 
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const updateTextarea = (newText: string) => {
@@ -44,7 +46,7 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 
 	return (
 		<>
-			<h1>1. Peggyの生成したparserを使ってみる</h1>
+			<h1>1. parserを使ってみる (calc)</h1>
 			{errMsg ? (
 				<p className="errMsg">{errMsg}</p>
 			) : result ? (
@@ -58,7 +60,7 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 					<textarea
 						ref={textareaRef}
 						className="ta1"
-						onChange={(e) => setText(e.target.value)}
+						// onChange={(e) => setText(e.target.value)} // 再描画されすぎ
 					/>
 					<br />
 					<button type="button" onClick={() => updateResult}>

@@ -16,11 +16,13 @@ function App() {
 }
 
 export function Links({ me }: { me?: string }) {
-	const links = [{ to: "/1", text: "Peggyの生成したparserを使ってみる" }];
+	const links = [{ to: "/1", text: "parserを使ってみる (calc)" }];
 	return (
 		<ol reversed>
 			{links.map((link) => (
-				<li key={link.to}>{link.to !== me ? <Link to={link.to}>{link.text}</Link> : link.text}</li>
+				<li key={link.to}>
+					{link.to !== me ? <Link to={link.to}>{link.text}</Link> : link.text}
+				</li>
 			))}
 		</ol>
 	);

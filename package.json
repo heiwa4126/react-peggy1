@@ -12,7 +12,7 @@
 		"actionlint": "docker run --rm -v \"$(pwd):$(pwd)\" -w \"$(pwd)\" rhysd/actionlint",
 		"parser:name": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/nameParser.ts --cache src/name.peggy",
 		"parser:names": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/namesParser.ts --cache src/names.peggy",
-		"parser:calc": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/calcParser.ts --cache src/calc.peggy"
+		"parser:calc": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/calcParser.ts src/calc.peggy"
 	},
 	"dependencies": {
 		"react": "^18.3.1",
