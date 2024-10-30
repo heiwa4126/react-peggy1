@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class MyTextArea {
+export class MyTextArea {
 	private textAreaRef: React.RefObject<HTMLTextAreaElement>;
 
 	constructor() {
@@ -21,6 +21,6 @@ export default class MyTextArea {
 	draw = ({
 		...props
 	}: Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "ref">) => {
-		return <textarea ref={this.textAreaRef} {...props} />;
+		return <textarea ref={this.textAreaRef} value={this.s} {...props} />;
 	};
 }

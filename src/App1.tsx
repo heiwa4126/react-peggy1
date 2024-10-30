@@ -10,7 +10,6 @@ const m3 = "(1+2) * 3 / z";
 function App() {
 	const [result, setResult] = useState<string>("");
 	const [errMsg, setErrMsg] = useState<string>("");
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	const calcResult = (m: string) => {
 		try {
@@ -27,21 +26,32 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 			}
 		}
 	};
+
+	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const updateResult = () => {
 		if (textareaRef.current) {
 			calcResult(textareaRef.current.value);
 		}
 	};
-	useCtrlEnter(updateResult, []);
 	const updateTextarea = (newText: string) => {
 		if (textareaRef.current) {
 			textareaRef.current.value = newText;
 		}
 	};
 
+	useCtrlEnter(updateResult, []);
+
 	const updateTxtAndResult = (m: string) => {
 		updateTextarea(m);
 		calcResult(m);
+	};
+
+	const BtnEx = ({ m, label }: { m: string; label: string }) => {
+		return (
+			<button type="button" onClick={() => updateTxtAndResult(m)}>
+				{label}
+			</button>
+		);
 	};
 
 	return (
@@ -68,15 +78,9 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 					</button>
 				</div>
 				<div className="button-container">
-					<button type="button" onClick={() => updateTxtAndResult(m1)}>
-						← サンプル 1
-					</button>
-					<button type="button" onClick={() => updateTxtAndResult(m2)}>
-						← サンプル 2
-					</button>
-					<button type="button" onClick={() => updateTxtAndResult(m3)}>
-						← サンプル 3 (エラー)
-					</button>
+					<BtnEx m={m1} label="← サンプル 1" />
+					<BtnEx m={m2} label="← サンプル 2" />
+					<BtnEx m={m3} label="← サンプル 3 (エラー)" />
 				</div>
 			</div>
 			<nav>

@@ -31,9 +31,10 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 	};
 	const updateResult = () => calcResult(ta1.getText());
 	useCtrlEnter(updateResult, []);
+	const updateTextarea = (newText: string) => ta1.setText(newText);
 
 	const updateTxtAndResult = (m: string) => {
-		ta1.setText(m);
+		updateTextarea(m);
 		calcResult(m);
 	};
 
@@ -57,21 +58,26 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 					</button>
 				</div>
 				<div className="button-container">
-					<button type="button" onClick={() => updateTxtAndResult(m1)}>
-						← サンプル 1
-					</button>
-					<button type="button" onClick={() => updateTxtAndResult(m2)}>
-						← サンプル 2
-					</button>
-					<button type="button" onClick={() => updateTxtAndResult(m3)}>
-						← サンプル 3 (エラー)
-					</button>
+					<BtnEx onClick={() => updateTxtAndResult(m1)} text="← サンプル 1" />
+					<BtnEx onClick={() => updateTxtAndResult(m2)} text="← サンプル 2" />
+					<BtnEx
+						onClick={() => updateTxtAndResult(m3)}
+						text="← サンプル 3 (エラー)"
+					/>
 				</div>
 			</div>
 			<nav>
 				<Links me="/1" />
 			</nav>
 		</>
+	);
+}
+
+function BtnEx({ onClick, text }: { onClick: () => void; text: string }) {
+	return (
+		<button type="button" onClick={onClick}>
+			{text}
+		</button>
 	);
 }
 
