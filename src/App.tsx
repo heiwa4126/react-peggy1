@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
 import App1 from "./App1";
@@ -16,8 +17,9 @@ function App() {
 	);
 }
 
-export function Links({ me }: { me?: string }) {
-	const links = [{ to: "/1", text: "parserを使ってみる (calc)" }];
+const links = [{ to: "/1", text: "parserを使ってみる (calc)" }];
+
+export const Links = React.memo(({ me }: { me?: string }) => {
 	return (
 		<ol reversed>
 			{links.map((link) => (
@@ -25,6 +27,6 @@ export function Links({ me }: { me?: string }) {
 			))}
 		</ol>
 	);
-}
+});
 
 export default App;

@@ -23,7 +23,9 @@ export class MyTextArea {
 	draw = ({
 		...props
 	}: Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "value" | "onChange">) => {
-		[this.text, this.setText] = useState<string>();
+		const [text, setText] = useState<string>();
+		this.text = text;
+		this.setText = setText;
 		return (
 			<textarea
 				value={this.text}

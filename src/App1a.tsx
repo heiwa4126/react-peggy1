@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { PeggySyntaxError, parse } from "../lib/calcParser";
 import { Links } from "./App";
 import { MyTextArea } from "./MyTextArea";
@@ -37,13 +37,13 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 		calcResult(m);
 	};
 
-	const BtnEx = ({ m, label }: { m: string; label: string }) => {
+	const BtnEx = React.memo(({ m, label }: { m: string; label: string }) => {
 		return (
 			<button type="button" onClick={() => updateTxtAndResult(m)}>
 				{label}
 			</button>
 		);
-	};
+	});
 
 	return (
 		<>
