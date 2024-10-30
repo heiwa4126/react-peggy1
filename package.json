@@ -1,0 +1,33 @@
+{
+	"name": "react-mermaid1",
+	"private": true,
+	"version": "0.0.2",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build",
+		"preview": "vite preview",
+		"format": "biome format --write . && dprint fmt",
+		"check": "biome check --write . && dprint check",
+		"actionlint": "docker run --rm -v \"$(pwd):$(pwd)\" -w \"$(pwd)\" rhysd/actionlint",
+		"parser:name": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/nameParser.ts --cache src/name.peggy",
+		"parser:names": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/namesParser.ts --cache src/names.peggy",
+		"parser:calc": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/calcParser.ts --cache src/calc.peggy"
+	},
+	"dependencies": {
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"react-router-dom": "^6.27.0"
+	},
+	"devDependencies": {
+		"@types/node": "^22.8.4",
+		"@types/react": "^18.3.12",
+		"@types/react-dom": "^18.3.1",
+		"@vitejs/plugin-react-swc": "^3.7.1",
+		"typescript": "^5.6.3",
+		"vite": "^5.4.10",
+		"vite-plugin-cdn-import": "^1.0.1",
+		"peggy": "^4.1.1",
+		"ts-pegjs": "^4.2.1"
+	}
+}
