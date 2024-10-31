@@ -3,13 +3,29 @@ import { PeggySyntaxError, parse } from "../lib/calcParser";
 import { Links } from "./App";
 import { useCtrlEnter } from "./hooks";
 
-const m1 = "(1+2) * 3";
-const m2 = "(1+2) * 3 + 4";
-const m3 = "(1+2) * 3 / z";
+const ex1 = "(1+2) * 3";
+const ex2 = "(1+2) * 3 + 4";
+const ex3 = "(1+2) * 3 / z"; // エラーのサンプル
 
 interface parseResult {
 	result: string;
 	errMsg: string;
+}
+
+async function parseCalc(m: string): Promise<parseResult> {
+	try {
+		const newResult = parse(m);
+		return { result: String(newResult), errMsg: "" };
+	} catch (error) {
+		let errMsg = "";
+		if (error instanceof PeggySyntaxError) {
+			errMsg = `Syntax Error: ${error.message}
+	Location: Line ${error.location.start.line}, Column ${error.location.start.column}`;
+		} else {
+			errMsg = `Unexpected error: ${error}`;
+		}
+		return { result: "", errMsg };
+	}
 }
 
 function App() {
@@ -17,33 +33,23 @@ function App() {
 	const [result, setResult] = useState<parseResult>({ result: "", errMsg: "" });
 
 	const calcResult = (m: string) => {
-		try {
-			const newResult = parse(m);
-			setResult({ result: String(newResult), errMsg: "" });
-		} catch (error) {
-			if (error instanceof PeggySyntaxError) {
-				setResult({
-					result: "",
-					errMsg: `Syntax Error: ${error.message}
-Location: Line ${error.location.start.line}, Column ${error.location.start.column}`,
-				});
-			} else {
-				setResult({ result: "", errMsg: `Unexpected error: ${error}` });
-			}
-		}
+		parseCalc(m).then((r) => {
+			setResult(r);
+		});
 	};
+
 	const updateResult = () => calcResult(text);
 	useCtrlEnter(updateResult, []);
 
-	const updateTxtAndResult = (m: string) => {
-		setText(m);
-		calcResult(m);
+	const updateTxtAndResult = (newText: string) => {
+		setText(newText);
+		calcResult(newText);
 	};
 
-	const BtnEx = React.memo(({ m, label }: { m: string; label: string }) => {
+	const BtnEx = React.memo(({ ex, lbl }: { ex: string; lbl: string }) => {
 		return (
-			<button type="button" onClick={() => updateTxtAndResult(m)}>
-				{label}
+			<button type="button" onClick={() => updateTxtAndResult(ex)}>
+				{lbl}
 			</button>
 		);
 	});
@@ -75,9 +81,9 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 					</button>
 				</div>
 				<div className="button-container">
-					<BtnEx m={m1} label="← サンプル 1" />
-					<BtnEx m={m2} label="← サンプル 2" />
-					<BtnEx m={m3} label="← サンプル 3 (エラー)" />
+					<BtnEx ex={ex1} lbl="←サンプル 1" />
+					<BtnEx ex={ex2} lbl="←サンプル 2" />
+					<BtnEx ex={ex3} lbl="←サンプル 3 (エラー)" />
 				</div>
 			</div>
 			<nav>
