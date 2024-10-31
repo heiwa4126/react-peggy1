@@ -6,6 +6,8 @@
 で
 パーサをジェネレートして、React で 使ってみるテスト。Bun で TypeScript で Vite
 
+[ts-pegjs](https://www.npmjs.com/package/ts-pegjs) は止めて、d.ts にするかも。
+
 ## ライブデモ
 
 <https://heiwa4126.github.io/react-peggy1> (GitHub Pages)
