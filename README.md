@@ -12,12 +12,12 @@
 
 ## 開発
 
-Vite で React で TypeScript + Bun
-(たぶん npm でもなんでもいい)
+Vite で React で TypeScript + Bun なので普通に。
+(たぶん npm でも pnpm でもなんでもいい)
 
 ```sh
 bun i
-bun parse:calc
+bun parse:calc  # src/calc.peggy を元に lib/calcParser.ts を生成
 bun dev
 bun run build & bun preview
 ```
