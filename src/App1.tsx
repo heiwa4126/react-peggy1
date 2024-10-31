@@ -3,16 +3,18 @@ import { PeggySyntaxError, parse } from "../lib/calcParser";
 import { Links } from "./App";
 import { useCtrlEnter } from "./hooks";
 
+//#region サンプルデータ
 const ex1 = "(1+2) * 3";
 const ex2 = "(1+2) * 3 + 4";
 const ex3 = "(1+2) * 3 / z"; // エラーのサンプル
+//#endregion
 
-interface parseResult {
+interface calcResult {
 	result: string;
 	errMsg: string;
 }
 
-async function parseCalc(m: string): Promise<parseResult> {
+async function parseCalc(m: string): Promise<calcResult> {
 	try {
 		const newResult = parse(m);
 		return { result: String(newResult), errMsg: "" };
@@ -28,7 +30,7 @@ async function parseCalc(m: string): Promise<parseResult> {
 
 function App() {
 	const [text, setText] = useState<string>("");
-	const [result, setResult] = useState<parseResult>({ result: "", errMsg: "" });
+	const [result, setResult] = useState<calcResult>({ result: "", errMsg: "" });
 
 	const calcResult = (exp: string) => {
 		parseCalc(exp).then((newResult) => {
@@ -85,7 +87,7 @@ function App() {
 				</div>
 			</div>
 			<nav>
-				<Links me="/1" />
+				<Links here="/1" />
 			</nav>
 		</>
 	);

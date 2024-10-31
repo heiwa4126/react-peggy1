@@ -3,6 +3,7 @@ import { PeggySyntaxError, parse } from "../lib/namesParser";
 import { Links } from "./App";
 import { useCtrlEnter } from "./hooks";
 
+//#region サンプルデータ
 const ex1 = `Name: foo Age: 0;
 Name: hoge Age: 10;
 Name: たろう Age: 98;`;
@@ -10,13 +11,14 @@ const ex2 = "Name: foo Age: 100; Name: hoge Age: 10;";
 const ex3 = `Name: foo Age: 0;
 Name: hoge Age: ;
 Name: たろう Age: 98;`; // エラーのサンプル
+//#endregion
 
-interface parseResult {
+interface namesResult {
 	result: string;
 	errMsg: string;
 }
 
-async function parseNames(exp: string): Promise<parseResult> {
+async function parseNames(exp: string): Promise<namesResult> {
 	try {
 		const result = parse(exp);
 		return { result: JSON.stringify(result), errMsg: "" };
@@ -32,7 +34,7 @@ async function parseNames(exp: string): Promise<parseResult> {
 
 function App() {
 	const [text, setText] = useState<string>("");
-	const [result, setResult] = useState<parseResult>({ result: "", errMsg: "" });
+	const [result, setResult] = useState<namesResult>({ result: "", errMsg: "" });
 
 	const calcResult = (exp: string) => {
 		parseNames(exp).then((newResult) => {
@@ -89,7 +91,7 @@ function App() {
 				</div>
 			</div>
 			<nav>
-				<Links me="/1" />
+				<Links here="/2" />
 			</nav>
 		</>
 	);

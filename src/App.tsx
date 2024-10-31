@@ -23,11 +23,13 @@ const links = [
 	{ to: "/2", text: "parserを使ってみる (names)" },
 ];
 
-export const Links = React.memo(({ me }: { me?: string }) => {
+export const Links = React.memo(({ here }: { here?: string }) => {
 	return (
 		<ol reversed>
 			{links.map((link) => (
-				<li key={link.to}>{link.to !== me ? <Link to={link.to}>{link.text}</Link> : link.text}</li>
+				<li key={link.to}>
+					{link.to !== here ? <Link to={link.to}>{link.text}</Link> : link.text}
+				</li>
 			))}
 		</ol>
 	);
