@@ -7,23 +7,28 @@ const m1 = "(1+2) * 3";
 const m2 = "(1+2) * 3 + 4";
 const m3 = "(1+2) * 3 / z";
 
+interface parseResult {
+	result: string;
+	errMsg: string;
+}
+
 function App() {
 	const [text, setText] = useState<string>("");
-	const [result, setResult] = useState<string>("");
-	const [errMsg, setErrMsg] = useState<string>("");
+	const [result, setResult] = useState<parseResult>({ result: "", errMsg: "" });
 
 	const calcResult = (m: string) => {
 		try {
 			const newResult = parse(m);
-			setResult(String(newResult));
-			setErrMsg("");
+			setResult({ result: String(newResult), errMsg: "" });
 		} catch (error) {
-			setResult("");
 			if (error instanceof PeggySyntaxError) {
-				setErrMsg(`Syntax Error: ${error.message}
-Location: Line ${error.location.start.line}, Column ${error.location.start.column}`);
+				setResult({
+					result: "",
+					errMsg: `Syntax Error: ${error.message}
+Location: Line ${error.location.start.line}, Column ${error.location.start.column}`,
+				});
 			} else {
-				setErrMsg(`Unexpected error: ${error}`);
+				setResult({ result: "", errMsg: `Unexpected error: ${error}` });
 			}
 		}
 	};
@@ -46,10 +51,10 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 	return (
 		<>
 			<h1>1a. parserを使ってみる (calc)</h1>
-			{errMsg ? (
-				<p className="errMsg">{errMsg}</p>
-			) : result ? (
-				<p>{result}</p>
+			{result.errMsg ? (
+				<p className="errMsg">{result.errMsg}</p>
+			) : result.result ? (
+				<p>{result.result}</p>
 			) : (
 				<p>(ここに結果が表示されます)</p>
 			)}
