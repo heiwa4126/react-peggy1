@@ -1,66 +1,64 @@
-import { useRef, useState } from "react";
+import React, { useState } from "react";
 import { PeggySyntaxError, parse } from "../lib/calcParser";
 import { Links } from "./App";
 import { useCtrlEnter } from "./hooks";
 
-const m1 = "(1+2) * 3";
-const m2 = "(1+2) * 3 + 4";
-const m3 = "(1+2) * 3 / z";
+const ex1 = "(1+2) * 3";
+const ex2 = "(1+2) * 3 + 4";
+const ex3 = "(1+2) * 3 / z"; // エラーのサンプル
+
+interface parseResult {
+	result: string;
+	errMsg: string;
+}
+
+async function parseCalc(m: string): Promise<parseResult> {
+	try {
+		const newResult = parse(m);
+		return { result: String(newResult), errMsg: "" };
+	} catch (error) {
+		const errMsg =
+			error instanceof PeggySyntaxError
+				? `Syntax Error: ${error.message}
+	Location: Line ${error.location.start.line}, Column ${error.location.start.column}`
+				: `Unexpected error: ${error}`;
+		return { result: "", errMsg };
+	}
+}
 
 function App() {
-	const [result, setResult] = useState<string>("");
-	const [errMsg, setErrMsg] = useState<string>("");
+	const [text, setText] = useState<string>("");
+	const [result, setResult] = useState<parseResult>({ result: "", errMsg: "" });
 
-	const calcResult = (m: string) => {
-		try {
-			const newResult = parse(m);
-			setResult(String(newResult));
-			setErrMsg("");
-		} catch (error) {
-			setResult("*ERROR*");
-			if (error instanceof PeggySyntaxError) {
-				setErrMsg(`Syntax Error: ${error.message}
-Location: Line ${error.location.start.line}, Column ${error.location.start.column}`);
-			} else {
-				setErrMsg(`Unexpected error: ${error}`);
-			}
-		}
+	const calcResult = (exp: string) => {
+		parseCalc(exp).then((newResult) => {
+			setResult(newResult);
+		});
 	};
 
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
-	const updateResult = () => {
-		if (textareaRef.current) {
-			calcResult(textareaRef.current.value);
-		}
-	};
-	const updateTextarea = (newText: string) => {
-		if (textareaRef.current) {
-			textareaRef.current.value = newText;
-		}
-	};
-
+	const updateResult = () => calcResult(text);
 	useCtrlEnter(updateResult, []);
 
-	const updateTxtAndResult = (m: string) => {
-		updateTextarea(m);
-		calcResult(m);
+	const updateTxtAndResult = (newText: string) => {
+		setText(newText);
+		calcResult(newText);
 	};
 
-	const BtnEx = ({ m, label }: { m: string; label: string }) => {
+	const BtnEx = React.memo(({ ex, lbl }: { ex: string; lbl: string }) => {
 		return (
-			<button type="button" onClick={() => updateTxtAndResult(m)}>
-				{label}
+			<button type="button" onClick={() => updateTxtAndResult(ex)}>
+				{lbl}
 			</button>
 		);
-	};
+	});
 
 	return (
 		<>
 			<h1>1. parserを使ってみる (calc)</h1>
-			{errMsg ? (
-				<p className="errMsg">{errMsg}</p>
-			) : result ? (
-				<p>{result}</p>
+			{result.errMsg ? (
+				<p className="errMsg">{result.errMsg}</p>
+			) : result.result ? (
+				<p>{result.result}</p>
 			) : (
 				<p>(ここに結果が表示されます)</p>
 			)}
@@ -68,9 +66,12 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 			<div className="container">
 				<div>
 					<textarea
-						ref={textareaRef}
 						className="ta1"
-						// onChange={(e) => setText(e.target.value)} // 再描画されすぎ
+						placeholder="(ここに数式を入力して)"
+						value={text}
+						onChange={(e) => {
+							setText(e.target.value);
+						}}
 					/>
 					<br />
 					<button type="button" onClick={updateResult}>
@@ -78,9 +79,9 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 					</button>
 				</div>
 				<div className="button-container">
-					<BtnEx m={m1} label="← サンプル 1" />
-					<BtnEx m={m2} label="← サンプル 2" />
-					<BtnEx m={m3} label="← サンプル 3 (エラー)" />
+					<BtnEx ex={ex1} lbl="←サンプル 1" />
+					<BtnEx ex={ex2} lbl="←サンプル 2" />
+					<BtnEx ex={ex3} lbl="←サンプル 3 (エラー)" />
 				</div>
 			</div>
 			<nav>
