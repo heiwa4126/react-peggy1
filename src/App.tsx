@@ -19,8 +19,8 @@ function App() {
 }
 
 const links = [
-	{ to: "/1", text: "parserを使ってみる (calc)" },
 	{ to: "/2", text: "parserを使ってみる (names)" },
+	{ to: "/1", text: "parserを使ってみる (calc)" },
 ];
 
 export const Links = React.memo(({ here }: { here?: string }) => {
