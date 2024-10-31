@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { PeggySyntaxError, parse } from "../lib/calcParser";
 import { Links } from "./App";
-import { MyTextArea } from "./MyTextArea";
 import { useCtrlEnter } from "./hooks";
 
 const m1 = "(1+2) * 3";
 const m2 = "(1+2) * 3 + 4";
 const m3 = "(1+2) * 3 / z";
 
-const ta1 = new MyTextArea(); // コンポーネント外で宣言すること
-
 function App() {
+	const [text, setText] = useState<string>("");
 	const [result, setResult] = useState<string>("");
 	const [errMsg, setErrMsg] = useState<string>("");
 
@@ -29,11 +27,11 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 			}
 		}
 	};
-	const updateResult = () => calcResult(ta1.get());
+	const updateResult = () => calcResult(text);
 	useCtrlEnter(updateResult, []);
 
 	const updateTxtAndResult = (m: string) => {
-		ta1.set(m);
+		setText(m);
 		calcResult(m);
 	};
 
@@ -58,7 +56,14 @@ Location: Line ${error.location.start.line}, Column ${error.location.start.colum
 
 			<div className="container">
 				<div>
-					<ta1.draw className="ta1" placeholder="(ここに数式を入力して)" />
+					<textarea
+						className="ta1"
+						placeholder="(ここに数式を入力して)"
+						value={text}
+						onChange={(e) => {
+							setText(e.target.value);
+						}}
+					/>
 					<br />
 					<button type="button" onClick={updateResult}>
 						更新 (Ctrl+Enter)
