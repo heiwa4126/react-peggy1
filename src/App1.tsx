@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// import { PeggySyntaxError, parse } from "../lib/calcParser"; // peggyでtsの時
 import { SyntaxError as PeggySyntaxError, parse } from "../lib/calcParser";
 import { Links } from "./App";
 import { useCtrlEnter } from "./hooks";

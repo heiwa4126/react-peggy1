@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// import { PeggySyntaxError, parse } from "../lib/namesParser"; // peggyでtsの時
 import { SyntaxError as PeggySyntaxError, parse } from "../lib/namesParser";
 import { Links } from "./App";
 import { useCtrlEnter } from "./hooks";
@@ -7,9 +8,11 @@ import { useCtrlEnter } from "./hooks";
 const ex1 = `Name: foo Age: 0;
 Name: hoge Age: 10;
 Name: たろう Age: 98;`;
-const ex2 = "Name: foo Age: 100; Name: hoge Age: 10;";
+
+const ex2 = "Name: foo Age: 10; Name: hoge Age: 10;";
+
 const ex3 = `Name: foo Age: 0;
-Name: hoge Age: ;
+Name: hoge Age: 100;
 Name: たろう Age: 98;`; // エラーのサンプル
 //#endregion
 

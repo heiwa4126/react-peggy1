@@ -10,9 +10,12 @@
 		"format": "biome format --write . && dprint fmt",
 		"check": "biome check --write . && dprint check",
 		"actionlint": "docker run --rm -v \"$(pwd):$(pwd)\" -w \"$(pwd)\" rhysd/actionlint",
-		"parser:name": "peggy -o lib/nameParser.js -m --dts src/name.peggy",
-		"parser:names": "peggy -o lib/namesParser.js -m --dts src/names.peggy",
-		"parser:calc": "peggy -o lib/calcParser.js -m --dts src/calc.peggy"
+		"parser:name": "peggy --format es -m --dts -o lib/nameParser.mjs src/name.peggy",
+		"parser:names": "peggy --format es -m --dts -o lib/namesParser.mjs src/names.peggy",
+		"parser:calc": "peggy --format es -m --dts -o lib/calcParser.mjs src/calc.peggy",
+		"parser:name:ts": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/nameParser.ts --cache src/name.peggy",
+		"parser:names:ts": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/namesParser.ts --cache src/names.peggy",
+		"parser:calc:ts": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/calcParser.ts src/calc.peggy"
 	},
 	"dependencies": {
 		"react": "^18.3.1",

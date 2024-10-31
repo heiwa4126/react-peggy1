@@ -6,11 +6,17 @@
 で
 パーサをジェネレートして、React で 使ってみるテスト。Bun で TypeScript で Vite
 
-[ts-pegjs](https://www.npmjs.com/package/ts-pegjs) は止めて、d.ts にするかも。
-
 ## ライブデモ
 
 <https://heiwa4126.github.io/react-peggy1> (GitHub Pages)
+
+## ts-pegjs は止めた
+
+ECMAScript(.mjs) と d.ts にした。(& sourcemap)
+
+ただ TypeScript(.ts) で出す設定は
+package.json の run-scripts の `parser:names:ts` などに残しておく。
+(plugin オプションの設定が奇妙だから)
 
 ## 開発
 
