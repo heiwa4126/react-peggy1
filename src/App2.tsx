@@ -18,9 +18,9 @@ interface namesResult {
 	errMsg: string;
 }
 
-async function parseNames(exp: string): Promise<namesResult> {
+async function parseNames(input: string): Promise<namesResult> {
 	try {
-		const result = parse(exp);
+		const result = parse(input);
 		return { result: JSON.stringify(result), errMsg: "" };
 	} catch (error) {
 		const errMsg =
@@ -36,8 +36,8 @@ function App() {
 	const [text, setText] = useState<string>("");
 	const [result, setResult] = useState<namesResult>({ result: "", errMsg: "" });
 
-	const calcResult = (exp: string) => {
-		parseNames(exp).then((newResult) => {
+	const calcResult = (input: string) => {
+		parseNames(input).then((newResult) => {
 			setResult(newResult);
 		});
 	};

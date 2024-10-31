@@ -14,9 +14,9 @@ interface calcResult {
 	errMsg: string;
 }
 
-async function parseCalc(m: string): Promise<calcResult> {
+async function parseCalc(input: string): Promise<calcResult> {
 	try {
-		const newResult = parse(m);
+		const newResult = parse(input);
 		return { result: String(newResult), errMsg: "" };
 	} catch (error) {
 		const errMsg =
@@ -32,8 +32,8 @@ function App() {
 	const [text, setText] = useState<string>("");
 	const [result, setResult] = useState<calcResult>({ result: "", errMsg: "" });
 
-	const calcResult = (exp: string) => {
-		parseCalc(exp).then((newResult) => {
+	const calcResult = (input: string) => {
+		parseCalc(input).then((newResult) => {
 			setResult(newResult);
 		});
 	};
