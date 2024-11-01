@@ -10,9 +10,9 @@
 		"format": "biome format --write . && dprint fmt",
 		"check": "biome check --write . && dprint check",
 		"actionlint": "docker run --rm -v \"$(pwd):$(pwd)\" -w \"$(pwd)\" rhysd/actionlint",
-		"parser:name": "peggy --format es -m --dts -o lib/nameParser.mjs src/name.peggy",
-		"parser:names": "peggy --format es -m --dts -o lib/namesParser.mjs src/names.peggy",
-		"parser:calc": "peggy --format es -m --dts -o lib/calcParser.mjs src/calc.peggy",
+		"parser:names": "peggy --format es -m --dts -o lib/namesParser.mjs peg/names.peggy",
+		"parser:name": "peggy --format es -m --dts -o lib/nameParser.mjs peg/name.peggy",
+		"parser:calc": "peggy --format es -m --dts -o lib/calcParser.mjs peg/calc.peggy",
 		"parser:name:ts": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/nameParser.ts --cache src/name.peggy",
 		"parser:names:ts": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/namesParser.ts --cache src/names.peggy",
 		"parser:calc:ts": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/calcParser.ts src/calc.peggy"
