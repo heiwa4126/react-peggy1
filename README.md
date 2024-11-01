@@ -40,11 +40,6 @@ bun dev
 bun run build & bun preview
 ```
 
-## メモ
-
-生成されたパーサ(`lib/calcParser.ts`)を見ると、警告で真っ赤。
-これはしょうがないのかな...
-
 ## 参考
 
 - [Generating a Parser](https://peggyjs.org/documentation.html#generating-a-parser)
