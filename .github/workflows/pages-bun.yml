@@ -65,8 +65,10 @@ jobs:
           else
             export GITHUB_REPO_NAME="${{ steps.extract-repo-name.outputs.repo_name }}"
           fi
+          #--- this project special from here
           bun run parser:names
           bun run parser:calc
+          #--- this project special over here
           bun run build
 
       - name: Setup Pages
