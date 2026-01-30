@@ -18,7 +18,7 @@
 		"parser:calc:ts": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs.js -o lib/calcParser.ts src/calc.peggy"
 	},
 	"dependencies": {
-		"react": "^18.3.1",
+		"react": "^19.0.0",
 		"react-dom": "^18.3.1",
 		"react-router-dom": "^7.2.0"
 	},
